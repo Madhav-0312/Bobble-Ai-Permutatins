@@ -2,65 +2,79 @@
 #include<fstream>
 #include<vector>
 using namespace std;
-void print(vector<vector<string> > &arr) 
+//Print function to print permutations
+void print( vector < vector < string > >  &arr) 
 { 
-    // number of arrays 
+    // number of array of strings 
     int n = arr.size(); 
   
-    // to keep track of next element in each of 
-    // the n arrays 
-    int* indices = new int[n]; 
+    // To keep track of next element in each of the arrays 
+   
+    int* track = new int[n]; 
   
-    // initialize with first element's index 
+    // Initialize with 0
     for (int i = 0; i < n; i++) 
-        indices[i] = 0; 
+        track[i] = 0; 
   
     while (1) { 
   
-        // print current combination 
+        // Print current Permutation 
         for (int i = 0; i < n; i++) 
-            cout << arr[i][indices[i]];
+            cout << arr[i][track[i]];
         cout << endl; 
   
-        // find the rightmost array that has more 
-        // elements left after the current element  
-        // in that array 
+        // Find the rightmost array that has more elements left after the current element in that array 
+       
         int next = n - 1; 
         while (next >= 0 &&  
-              (indices[next] + 1 >= arr[next].size())) 
+              (track[next] + 1 >= arr[next].size())) 
             next--; 
   
-        // no such array is found so no more  
-        // combinations left 
+        // Exit when no more Permutations left
+	    
         if (next < 0) 
             return; 
   
-        // if found move to next element in that  
-        // array 
-        indices[next]++; 
+        // If found move to next element in that array
+        
+        track[next]++; 
   
-        // for all arrays to the right of this  
-        // array current index again points to  
-        // first element 
+        // For all arrays to the right of this array current index again points to first element  
+      
+	    
         for (int i = next + 1; i < n; i++) 
-            indices[i] = 0; 
+            track[i] = 0; 
     } 
 } 
 
+// Main function to read file
 
- int main() {
-	ifstream ip("input.csv");
-	vector <vector<string> > arr;
-	while(ip.peek()!=EOF) {
+ int main(int argc, const char *argv[]) {
+	 // Open file
+	ifstream ip( " argv[0] " );
+	 
+	 // Create a vector of vectors of type string
+	 
+	vector < vector <string> > arr;
+	 
+	 // Iterate till the end of file
+	 
+	while( ip.peek() != EOF) {
 		string a;
-		vector<string> row;
-		while(getline(ip,a,',')) 	
+		
+		// Take out rows from file
+		vector< string > row;
+		
+		// Insert rows into the 2-D vector
+		while( getline ( ip , a , ',' ) ) 	
 			row.push_back(a);
 		arr.push_back(row);
 		
 		
 }
+	 // Close the file
 ip.close();
+	 // Function call
 print(arr);
 
 return 0;
